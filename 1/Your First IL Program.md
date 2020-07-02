@@ -64,7 +64,7 @@ So, for our first program, I will be unoriginal and write a hello world program.
 }
 ```
 
-Let's get the `#include` out the way at first. `common.il` is simply a small helper that contains the assembly references for `System.Runtime` (as `System_Runtime`) and `System.Console` (as `System_Console`). We'll come onto assembly references later. We'll also ignore the assembly, module, class and method definitions for now, and just focus on the actual IL.
+Let's get the `#include` out the way at first. `common.il` is simply a small helper that contains the assembly references for `System.Runtime` and `System.Console`. We'll come onto assembly references later. We'll also ignore the assembly, module, class and method definitions for now, and just focus on the actual IL.
 `.entrypoint` isn't part of the actual IL - it is just a marker used to say "this is the program entry!". The name can be anything, but I chose `Main` for convention.
 
 ```
@@ -83,7 +83,7 @@ We use the `call` opcode here, and must specify the entire signature - return ty
 call <Modifiers> <ReturnType> [<Assembly>]<FullyQualifiedType>::<MethodName>(<Params>)
 ```
 
-is the general syntax of a `call`. We have no modifiers here, our return type is `void`, our assembly is `System_Console,` our type is `System.Console`. and the method and params is `Console.WriteLine(string)`. `call` pops something off the stack for each argument it takes (and one extra, for instance methods - we will get to this later), and either pushes nothing if it is `void`, else pushes a single value of the return type. Here, it pops our `string` off, and pushes nothing, so now the stack is empty
+is the general syntax of a `call`. We have no modifiers here, our return type is `void`, our assembly is `System.Console`, our type is `System.Console`. and the method and params is `Console.WriteLine(string)`. `call` pops something off the stack for each argument it takes (and one extra, for instance methods - we will get to this later), and either pushes nothing if it is `void`, else pushes a single value of the return type. Here, it pops our `string` off, and pushes nothing, so now the stack is empty
 
 `ret` marks the end of a method. When you return from a method, the stack must be empty - we pushed an item on from `ldstr`, but `call` popped it off, so we are fine. You must always specify the `ret` opcode, it is never implicit (unlike in C#).
 
